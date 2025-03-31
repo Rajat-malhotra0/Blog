@@ -7,6 +7,9 @@ import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { Blog } from '@/lib/types';
 
+// Add revalidation every 30 seconds
+export const revalidate = 30;
+
 export default async function Home() {
   // Fetch blogs directly in the server component
   const { data: blogs, error } = await supabase
