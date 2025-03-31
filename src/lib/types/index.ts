@@ -1,13 +1,14 @@
-export type Blog = {
-    id: string;
-    title: string;
-    content: string;
-    slug: string;
-    created_at: string;
-    updated_at: string;
-    like_count: number;
-    dislike_count: number;
-  };
+export interface Blog {
+  id: string;
+  title: string;
+  content: string;
+  slug: string;
+  created_at: string;
+  updated_at?: string;
+  author_name?: string; // Make this optional since some posts might be anonymous
+  like_count: number;
+  dislike_count: number;
+}
   
   export type Interaction = {
     id: string;
