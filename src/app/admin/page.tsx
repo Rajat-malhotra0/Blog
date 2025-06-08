@@ -401,10 +401,11 @@ export default async function AdminDashboard() {
             )}
           </Card>
         </div>
+        </div>
       </div>
-      
+
       {/* Recent Posts */}
-      <div>
+      <div className="max-w-7xl mx-auto px-6 pb-12">
         <h2 className="text-2xl font-bold mb-4">Recent Posts</h2>
         {recentPosts && recentPosts.length > 0 ? (
           <div className="space-y-4">
