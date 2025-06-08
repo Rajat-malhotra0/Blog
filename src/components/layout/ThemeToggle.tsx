@@ -7,22 +7,43 @@ export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // useEffect only runs on the client, so now we can safely show the UI
   useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) {
-    return null;
+    return (
+      <div className="w-12 h-6 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse" />
+    );
   }
+
+  const isDark = theme === 'dark';
 
   return (
     <button
-      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      className="p-2 rounded-full bg-gray-200 dark:bg-gray-700"
+      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+      className="relative w-14 h-7 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600 rounded-full transition-all duration-500 focus-ring shadow-lg border border-gray-300/50 dark:border-gray-600/50"
       aria-label="Toggle theme"
     >
-      {theme === 'dark' ? '🌞' : '🌙'}
+      {/* Background gradient overlay */}
+      <div className={`absolute inset-0 rounded-full transition-all duration-500 ${
+        isDark 
+          ? 'bg-gradient-to-r from-indigo-600 to-purple-600 opacity-100' 
+          : 'bg-gradient-to-r from-yellow-400 to-orange-500 opacity-100'
+      }`} />
+      
+      {/* Toggle circle */}
+      <div
+        className={`absolute top-1 w-5 h-5 rounded-full transition-all duration-500 transform flex items-center justify-center text-sm shadow-xl ring-2 ring-white/20 ${
+          isDark 
+            ? 'translate-x-7 bg-gradient-to-br from-slate-800 to-slate-900 text-yellow-300' 
+            : 'translate-x-1 bg-gradient-to-br from-white to-gray-100 text-orange-500'
+        }`}
+      >
+        <span className="transition-all duration-300">
+          {isDark ? '🌙' : '☀️'}
+        </span>
+      </div>
     </button>
   );
 }

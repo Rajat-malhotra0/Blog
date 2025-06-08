@@ -238,19 +238,20 @@ export function ToolbarPlugin(): React.ReactElement {
   }, [editor, blockType]);
 
   // Styling classes
-  const buttonBaseClass = "flex items-center justify-center p-2 rounded-md transition-colors duration-200 mr-1";
+  const buttonBaseClass = "flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 mr-1 font-medium text-sm focus-ring";
 
   // Get button class based on active state
   const getButtonClass = (isActive: boolean) => {
     return `${buttonBaseClass} ${isActive
-      ? "bg-blue-100 text-blue-700 border border-blue-300 dark:bg-blue-900 dark:text-blue-300 dark:border-blue-700"
-      : "border border-gray-300 text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105 ring-2 ring-blue-500/30"
+      : "bg-background/60 dark:bg-background-dark/60 backdrop-blur-sm border border-border/50 dark:border-border-dark/50 text-foreground hover:bg-blue-50 dark:hover:bg-blue-950/50 hover:border-blue-300 dark:hover:border-blue-600 hover:scale-105 hover:shadow-md"
       }`;
   };
 
   return (
-    <div className="toolbar p-2 border-b border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 flex flex-wrap gap-1">
-      <div className="formatting-group flex mr-2">
+    <div className="toolbar p-4 border-b border-border/30 dark:border-border-dark/30 bg-gradient-to-r from-background/80 to-background-secondary/80 dark:from-background-dark/80 dark:to-background-secondary-dark/80 backdrop-blur-xl flex flex-wrap gap-2">
+      {/* Formatting Group */}
+      <div className="formatting-group flex items-center space-x-1 mr-4 p-2 bg-card/50 dark:bg-card-dark/50 rounded-2xl border border-border/30 dark:border-border-dark/30">
         <button
           type="button"
           onClick={toggleBold}
@@ -282,7 +283,8 @@ export function ToolbarPlugin(): React.ReactElement {
         </button>
       </div>
 
-      <div className="heading-group flex mr-2">
+      {/* Heading Group */}
+      <div className="heading-group flex items-center space-x-1 mr-4 p-2 bg-card/50 dark:bg-card-dark/50 rounded-2xl border border-border/30 dark:border-border-dark/30">
         <button
           type="button"
           onClick={(e) => toggleHeading(e, 'h1')}
@@ -314,7 +316,8 @@ export function ToolbarPlugin(): React.ReactElement {
         </button>
       </div>
 
-      <div className="list-group flex">
+      {/* List Group */}
+      <div className="list-group flex items-center space-x-1 p-2 bg-card/50 dark:bg-card-dark/50 rounded-2xl border border-border/30 dark:border-border-dark/30">
         <button
           type="button"
           onClick={toggleBulletList}

@@ -169,86 +169,167 @@ export default async function AdminDashboard() {
       : 0;
 
   return (
-    <div className="px-4 py-6">
-      <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
-
-      {errors.length > 0 && (
-        <div className="mb-6 p-4 bg-red-100 dark:bg-red-900 border border-red-400 text-red-700 dark:text-red-200 rounded-lg">
-          <p className="font-semibold">Warning: Could not load all dashboard data.</p>
-          <ul className="list-disc list-inside text-sm mt-1">
-            {errors.map((err: any, index) => (
-               <li key={index}>{err.message || 'An unknown error occurred'} (Hint: {err.hint})</li>
-            ))}
-          </ul>
-          <p className="text-sm mt-1">Check server logs and ensure database tables/columns exist and RLS is bypassed (using SERVICE_ROLE_KEY).</p>
-        </div>
-      )}
-
-      {/* Content Summary */}
-      <div className="mb-12">
-        <h2 className="text-2xl font-bold mb-6">Content Summary</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="p-6">
-            <h3 className="text-lg text-gray-500 dark:text-gray-400">Total Posts</h3>
-            <p className="text-4xl font-bold mt-2">{postCount}</p>
-          </Card>
-          
-          <Card className="p-6">
-            <h3 className="text-lg text-gray-500 dark:text-gray-400">Total Likes</h3>
-            <p className="text-4xl font-bold mt-2 text-green-600 dark:text-green-400">{totalLikes}</p>
-          </Card>
-          
-          <Card className="p-6">
-            <h3 className="text-lg text-gray-500 dark:text-gray-400">Total Dislikes</h3>
-            <p className="text-4xl font-bold mt-2 text-red-600 dark:text-red-400">{totalDislikes}</p>
-          </Card>
+    <div className="min-h-screen bg-background dark:bg-background-dark">
+      {/* Header */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-950 dark:to-purple-950 border-b border-border/30 dark:border-border-dark/30">
+        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+        <div className="relative px-6 py-12">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center space-x-4 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-xl">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 00-2-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <div>
+                <h1 className="text-4xl font-bold gradient-text">Admin Dashboard</h1>
+                <p className="text-muted-foreground mt-1">Manage your blog and monitor analytics</p>
+              </div>
+            </div>
+            
+            {/* Quick Stats Overview */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+              <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl p-4 border border-white/20 dark:border-gray-700/50">
+                <div className="text-2xl font-bold text-foreground">{postCount}</div>
+                <div className="text-sm text-muted-foreground">Total Posts</div>
+              </div>
+              <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl p-4 border border-white/20 dark:border-gray-700/50">
+                <div className="text-2xl font-bold text-green-600 dark:text-green-400">{totalLikes}</div>
+                <div className="text-sm text-muted-foreground">Total Likes</div>
+              </div>
+              <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl p-4 border border-white/20 dark:border-gray-700/50">
+                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{totalViews.toLocaleString()}</div>
+                <div className="text-sm text-muted-foreground">Total Views</div>
+              </div>
+              <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl p-4 border border-white/20 dark:border-gray-700/50">
+                <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">{uniqueVisitors?.toLocaleString() || 0}</div>
+                <div className="text-sm text-muted-foreground">Unique Visitors</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Marketing Analytics Section */}
-      <div className="mb-12">
-        <h2 className="text-2xl font-bold mb-6">Marketing Analytics</h2>
-        
-        {/* Digital Marketing Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card className="p-6">
-            <h3 className="text-lg text-gray-500 dark:text-gray-400">Total Views</h3>
-            <p className="text-4xl font-bold mt-2">{totalViews.toLocaleString()}</p>
-          </Card>
-          
-          <Card className="p-6">
-            <h3 className="text-lg text-gray-500 dark:text-gray-400">Unique Visitors</h3>
-            <p className="text-4xl font-bold mt-2">{uniqueVisitors?.toLocaleString() || 0}</p>
-          </Card>
-          
-          <Card className="p-6">
-            <h3 className="text-lg text-gray-500 dark:text-gray-400">Engagement Rate</h3>
-            <p className="text-4xl font-bold mt-2">{engagementRate}%</p>
-            <p className="text-xs text-gray-500 mt-1">Interactions per view</p>
-          </Card>
-          
-          <Card className="p-6">
-            <h3 className="text-lg text-gray-500 dark:text-gray-400">Avg. Views Per Post</h3>
-            <p className="text-4xl font-bold mt-2">{avgViewsPerPost}</p>
-          </Card>
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        {errors.length > 0 && (
+          <div className="mb-8 p-6 bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-800/50 text-red-700 dark:text-red-300 rounded-2xl shadow-lg animate-shake">
+            <div className="flex items-start space-x-3">
+              <svg className="w-6 h-6 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div>
+                <p className="font-semibold text-lg">Warning: Could not load all dashboard data</p>
+                <ul className="list-disc list-inside text-sm mt-2 space-y-1">
+                  {errors.map((err: any, index) => (
+                     <li key={index}>{err.message || 'An unknown error occurred'} (Hint: {err.hint})</li>
+                  ))}
+                </ul>
+                <p className="text-sm mt-3 text-red-600 dark:text-red-400">Check server logs and ensure database tables/columns exist and RLS is bypassed (using SERVICE_ROLE_KEY).</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Content Summary */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold mb-6 flex items-center space-x-3">
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
+              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <span>Content Summary</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card variant="glass" className="p-8 group">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-medium text-muted-foreground">Total Posts</h3>
+                <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+              </div>
+              <p className="text-4xl font-bold gradient-text">{postCount}</p>
+            </Card>
+            
+            <Card variant="glass" className="p-8 group">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-medium text-muted-foreground">Total Likes</h3>
+                <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                </div>
+              </div>
+              <p className="text-4xl font-bold text-green-600 dark:text-green-400">{totalLikes}</p>
+            </Card>
+            
+            <Card variant="glass" className="p-8 group">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-medium text-muted-foreground">Total Dislikes</h3>
+                <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <svg className="w-5 h-5 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </div>
+              </div>
+              <p className="text-4xl font-bold text-red-600 dark:text-red-400">{totalDislikes}</p>
+            </Card>
+          </div>
         </div>
-        
-        {/* Additional Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="p-6">
-            <h3 className="text-lg text-gray-500 dark:text-gray-400">Conversion Rate</h3>
-            <p className="text-4xl font-bold mt-2">{conversionRate}%</p>
-            <p className="text-xs text-gray-500 mt-1">Likes per unique visitor</p>
-          </Card>
+
+        {/* Marketing Analytics Section */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold mb-6 flex items-center space-x-3">
+            <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 00-2-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <span>Marketing Analytics</span>
+          </h2>
           
-          <Card className="p-6">
-            <h3 className="text-lg text-gray-500 dark:text-gray-400">User Satisfaction</h3>
-            <p className="text-4xl font-bold mt-2">{userSatisfaction}%</p>
-            <p className="text-xs text-gray-500 mt-1">Likes vs total reactions</p>
-          </Card>
+          {/* Digital Marketing Overview */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <Card variant="glass" className="p-6 group">
+              <h3 className="text-lg font-medium text-muted-foreground mb-2">Total Views</h3>
+              <p className="text-3xl font-bold gradient-text">{totalViews.toLocaleString()}</p>
+            </Card>
+            
+            <Card variant="glass" className="p-6 group">
+              <h3 className="text-lg font-medium text-muted-foreground mb-2">Unique Visitors</h3>
+              <p className="text-3xl font-bold gradient-text">{uniqueVisitors?.toLocaleString() || 0}</p>
+            </Card>
+            
+            <Card variant="glass" className="p-6 group">
+              <h3 className="text-lg font-medium text-muted-foreground mb-2">Engagement Rate</h3>
+              <p className="text-3xl font-bold gradient-text">{engagementRate}%</p>
+              <p className="text-xs text-muted-foreground mt-1">Interactions per view</p>
+            </Card>
+            
+            <Card variant="glass" className="p-6 group">
+              <h3 className="text-lg font-medium text-muted-foreground mb-2">Avg. Views Per Post</h3>
+              <p className="text-3xl font-bold gradient-text">{avgViewsPerPost}</p>
+            </Card>
+          </div>
           
-          <Card className="p-6">
-            <h3 className="text-lg text-gray-500 dark:text-gray-400">Views Today</h3>
+          {/* Additional Metrics */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <Card variant="glass" className="p-6 group">
+              <h3 className="text-lg font-medium text-muted-foreground mb-2">Conversion Rate</h3>
+              <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">{conversionRate}%</p>
+              <p className="text-xs text-muted-foreground mt-1">Likes per unique visitor</p>
+            </Card>
+            
+            <Card variant="glass" className="p-6 group">
+              <h3 className="text-lg font-medium text-muted-foreground mb-2">User Satisfaction</h3>
+              <p className="text-3xl font-bold text-green-600 dark:text-green-400">{userSatisfaction}%</p>
+              <p className="text-xs text-muted-foreground mt-1">Likes vs total reactions</p>
+            </Card>
+            
+            <Card variant="glass" className="p-6 group">
+              <h3 className="text-lg font-medium text-muted-foreground mb-2">Views Today</h3>
             <p className="text-4xl font-bold mt-2">{viewsData.length > 0 ? viewsData[viewsData.length - 1]?.views : 0}</p>
           </Card>
         </div>
